@@ -14,6 +14,6 @@ export default () => (
                 <Tasks />
             </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>Tasks for the day</Footer>
+        <Footer style={{ textAlign: "center" }}>Your Daily Tasks - {new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }</Footer>
     </Layout>
 );

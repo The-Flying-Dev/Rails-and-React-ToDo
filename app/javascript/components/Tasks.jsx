@@ -1,8 +1,9 @@
-import { Table, message, Popconfirm } from "antd";
+import { Table, message, Checkbox, Popconfirm } from "antd";
 import React from "react";
 import AddTaskModal from "./AddTaskModal";
 
 class Tasks extends React.Component {
+	
 	columns = [
 		{
 			title: "Title",
@@ -13,6 +14,18 @@ class Tasks extends React.Component {
 			title: "Description",
 			dataIndex: "description",
 			key: "description",
+		},
+		{
+			title: "",			
+			key: "action",
+			render: (e) => (
+			    <Checkbox 
+				    onChange={() => e.target.checked}
+			    >
+				  Complete
+				</Checkbox>
+			),
+
 		},
 		{
 			title: "",

@@ -4,7 +4,7 @@ class Api::V1::TasksController < ApplicationController
     # GET /beers
     # GET /beers.json
     def index
-      @tasks = Task.all.order(title: :asc)
+      @tasks = Task.all.order(title: :desc)
       render json: @tasks
     end
   
