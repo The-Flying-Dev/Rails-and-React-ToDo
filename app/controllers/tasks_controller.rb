@@ -1,8 +1,8 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: [ :show, :create, :edit, :update, :destroy ]
 
   # GET /tasks or /tasks.json
-  def index    
+  def index        
   end
 
 end

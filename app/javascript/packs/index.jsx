@@ -13,4 +13,4 @@ document.addEventListener('DOMContentLoaded', () => {
     <App />,
     document.body.appendChild(document.createElement('div')),
   )
-})
+});
