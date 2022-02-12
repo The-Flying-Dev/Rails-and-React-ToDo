@@ -15,7 +15,6 @@ class TasksTest < ApplicationSystemTestCase
     click_on "New Task"
 
     fill_in "Description", with: @task.description
-    fill_in "Text", with: @task.text
     fill_in "Title", with: @task.title
     click_on "Create Task"
 
@@ -28,7 +27,6 @@ class TasksTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Description", with: @task.description
-    fill_in "Text", with: @task.text
     fill_in "Title", with: @task.title
     click_on "Update Task"
 
