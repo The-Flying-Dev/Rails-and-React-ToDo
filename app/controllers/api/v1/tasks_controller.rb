@@ -23,10 +23,8 @@ class Api::V1::TasksController < ApplicationController
       @task = Task.new
     end
   
-    # GET /tasks/1/edit
-    def edit
-    end
-  
+
+      
     # POST /tasks
     # POST /tasks.json
     def create
@@ -43,6 +41,13 @@ class Api::V1::TasksController < ApplicationController
     # PATCH/PUT /tasks/1
     # PATCH/PUT /tasks/1.json
     def update
+
+      if @task.update(task_params)
+        render json: @task
+      else
+        render json: @task.errors
+      end
+
     end
   
     # DELETE /tasks/1
@@ -60,8 +65,8 @@ class Api::V1::TasksController < ApplicationController
       end
   
       # Only allow a list of trusted parameters through.
-      def task_params
-        params.permit(:title, :description)
+      def task_params        
+        params.require(:task).permit(:title, :description)
       end
   end
   

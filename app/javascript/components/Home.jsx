@@ -11,7 +11,7 @@ export default () => (
         <Content style={{ padding: "0 50px" }}>
             <div className="site-layout-content" style={{ margin: "100px auto" }}>
                 <h1>Daily Tasks</h1>
-                <Tasks />
+                <Tasks /> 
             </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>Your Daily Tasks - {new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }</Footer>

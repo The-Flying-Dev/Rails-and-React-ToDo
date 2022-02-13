@@ -1,6 +1,7 @@
-import { Table, message, Checkbox, Popconfirm } from "antd";
 import React from "react";
+import { Table, message, Checkbox, Popconfirm } from "antd";
 import AddTaskModal from "./AddTaskModal";
+import EditTaskModal from "./EditTaskModal";
 
 class Tasks extends React.Component {
 	
@@ -31,6 +32,21 @@ class Tasks extends React.Component {
 			title: "",
 			key: "action",
 			render: (_text, record) => (
+			  <EditTaskModal 
+			  	task={record} 
+				header="Edit Task" 
+				label="Edit" 
+				method="put" 
+				url={"api/v1/tasks/update?id=" + record.id} 
+				reloadTasks={this.reloadTasks} 
+
+			/>
+			),
+		  },
+		{
+			title: "",
+			key: "action",
+			render: (_text, record) => (
 				<Popconfirm
 					title="Are you sure delete this task?"
 					onConfirm={() => this.deleteTask(record.id)}
@@ -46,7 +62,7 @@ class Tasks extends React.Component {
 	];
 
 	state = {
-		tasks: [],
+		tasks: []
 	};
 
 	componentDidMount() {
@@ -110,7 +126,16 @@ class Tasks extends React.Component {
 					pagination={{ pageSize: 5 }}
 				/>
 
-				<AddTaskModal reloadTasks={this.reloadTasks} />
+				
+				<EditTaskModal
+					task={{}} 
+					header="Add Task" 
+					label="Add Task" 
+					method="post" 
+					url="api/v1/tasks/create" 
+					reloadTasks={this.reloadTasks} 
+				
+				/>
 			</>
 		);
 	}

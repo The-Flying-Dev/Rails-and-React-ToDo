@@ -1,95 +1,69 @@
-import { Button, Form, Input, Modal, Select } from "antd";
 import React from "react";
+import { Button, Form, Input, Modal, Select } from "antd";
 
-
+const { Item } = Form;
+const { Option } = Select;
 
 class AddTaskModal extends React.Component {
-	formRef = React.createRef();
-	state = {
-		visible: false,
-	};
+  formRef = React.createRef();
 
-	onFinish = (values) => {
-		const url = "api/v1/tasks/create";
-		fetch(url, {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(values),
-		})
-			.then((data) => {
-				if (data.ok) {
-					this.handleCancel();
+  handleCancel = () => {
+    this.props.toggleVisibility();
+  }
 
-					return data.json();
-				}
-				throw new Error("Network error.");
-			})
-			.then(() => {
-				this.props.reloadTasks();
-			})
-			.catch((err) => console.error("Error: " + err));
-	};
+  onFinish = (values) => {
+    fetch(this.props.url, {
+      method: this.props.method,
+      headers: {       
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+      .then((data) => {
+        if (data.ok) {
+          this.handleCancel();
 
-	showModal = () => {
-		this.setState({
-			visible: true,
-		});
-	};
+          return data.json();
+        }
+        throw new Error("Network error.");
+      })
+      .then(() => {
+        this.props.reloadTasks();
+      })
+      .catch((err) => console.error("Error: " + err));
+  };
 
-	handleCancel = () => {
-		this.setState({
-			visible: false,
-		});
-	};
+  render() {
+    let { header, visible } = this.props;
+    let { title, description} = this.props.task;
 
-	render() {
-		return (
-			<>
-				<Button type="primary" onClick={this.showModal}>
-					Create New +
-				</Button>
+    var initialValues = {
+      title: title,
+      description: description,      
+    };
 
-				<Modal
-					title="Add New Task ..."
-					visible={this.state.visible}
-					onCancel={this.handleCancel}
-					footer={null}
-				>
-					<Form ref={this.formRef} layout="vertical" onFinish={this.onFinish}>
-						<Form.Item
-							name="title"
-							label="Title"
-							rules={[
-								{ required: true, message: "Please input your daily task" },
-							]}
-						>
-							<Input placeholder="Input your daily task" />
-						</Form.Item>
-
-						<Form.Item
-							name="description"
-							label="Description"
-							rules={[
-								{ required: true, message: "Please input your description!" },
-							]}
-						>
-							<Input placeholder="Input your description" />
-						</Form.Item>					
-
-						
-
-						<Form.Item>
-							<Button type="primary" htmlType="submit">
-								Submit
-							</Button>
-						</Form.Item>
-					</Form>
-				</Modal>
-			</>
-		);
-	}
+    return (
+      <>
+        <Modal title={header} visible={visible} onCancel={this.handleCancel} footer={null}>
+          <Form ref={this.formRef} layout="vertical" initialValues={initialValues} onFinish={this.onFinish}>
+            <Item name="title" label="Title" rules={[{ required: true, message: "Please input your title!" }]}>
+              <Input placeholder="Input your title" />
+            </Item>
+    
+            <Item name="description" label="Description" rules={[{ required: true, message: "Please input your description!" }]}>
+              <Input placeholder="Input your description" />
+            </Item>     
+    
+            <Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Item>
+          </Form>
+        </Modal>
+      </>
+    );
+  }
 }
 
 export default AddTaskModal;
